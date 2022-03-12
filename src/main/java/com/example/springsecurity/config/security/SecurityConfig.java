@@ -36,11 +36,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter { // WebSecurit
         // 로그인 설정
         http.formLogin()
                 .loginPage("/sign-up") 					    // 로그인이 수행될 View api(url)
-                .loginProcessingUrl("/api/user/sign-in") 	// 로그인 action url(로그인 form의 action과 일치)
-                .usernameParameter("account") 			// 로그인 form의 name(username)과 일치
-                .passwordParameter("password") 			// 로그인 form의 name(password)과 일치
-		 		.defaultSuccessUrl("/loginSuccess") 	// 로그인 성공 시 이동할 경로.
-		 		.failureUrl("/login?error") 			// 인증에 실패했을 때 보여주는 화면 url, 로그인 form으로 파라미터값 error=true로 보낸다
+                .loginProcessingUrl("/sign-in") 	// 로그인 action url(로그인 form의 action과 일치)
+                .usernameParameter("account") 			    // 로그인 form의 name(username)과 일치
+                .passwordParameter("password") 			    // 로그인 form의 name(password)과 일치
+		 		.defaultSuccessUrl("/loginSuccess") 	    // 로그인 성공 시 이동할 경로.
+		 		.failureUrl("/login?error") 			    // 인증에 실패했을 때 보여주는 화면 url, 로그인 form으로 파라미터값 error=true로 보낸다
 //                .successHandler(authenticationSuccessHandler())
 //                .failureHandler(authenticationFailureHandler())
                 .permitAll();

@@ -1,0 +1,95 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>SIGN-UP</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <script type="text/javascript" src="/js/jquery-3.6.0.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#signUpBtn').click(function() {
+                    signUpUser();
+                });
+            })
+
+            function signUpUser() {
+                let account = $('#user_account').val();
+                let password = $('#user_password').val();
+                let role = $('#user_role option:selected').val();
+
+                // account validation
+                if(account == '' || account.length == 0) {
+                    $('#errorMessage').text("empty account !!");
+                    return;
+                }
+
+                // password validation
+                if(password == '' || password.length == 0) {
+                    $('#errorMessage').text("empty password !!");
+                    return;
+                }
+
+                // role validation
+                if(role == 0 || role == '0') {
+                    $('#errorMessage').text("empty role !!");
+                    return;
+                }
+
+                let requestUserSignUpDto = {
+                    "account" : account,
+                    "password" : password,
+                    "role" : role
+                };
+
+                $.ajax({
+                    type : 'POST',
+                    url : '/api/user',
+                    dataType : 'json',
+                    contentType : 'application/json; charset=utf-8',
+                    data : JSON.stringify(requestUserSignUpDto)
+                }).done(function(data) {
+                    console.log(data);
+                    if(data > 0) {
+                        alert("sign up Success!!")
+                        //location.href='/';
+                    }
+                }).fail(function(error) {
+                    console.log(error);
+                    let errorMessage = error.responseJSON.message;
+                    $('#errorMessage').text(errorMessage);
+                });
+            }
+        </script>
+        <style>
+            .errorMessage{
+                color: red;
+                font-weight: bold;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h2>SIGN UP NEW USER</h2>
+
+            <div id="inputArea">
+                <label>ACCOUNT : sign-in id</label>
+                <input type="text" id="user_account">
+                <br>
+                <label>PASSWORD : sign-in password</label>
+                <input type="text" id="user_password">
+                <br>
+                <label>ROLE</label>
+                <select id="user_role">
+                    <option value="0">select User role</option>
+                    <option value="1">MASTER</option>
+                    <option value="2">USER</option>
+                </select>
+                <br>
+                <button type="button" id="signUpBtn">SIGN UP</button>
+            </div>
+
+            <div>
+                <p id="errorMessage" class="errorMessage"></p>
+            </div>
+        </div>
+    </body>
+</html>

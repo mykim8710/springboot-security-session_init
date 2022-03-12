@@ -10,7 +10,14 @@ import lombok.ToString;
 public enum ErrorCode {
 
     //Sign-up Error
-    EXIST_ACCOUNT(400, "S001", "This Account is exist.");
+    EXIST_ACCOUNT(400, "S001", "This Account is exist."),
+
+
+    // Validation Error
+    NOT_BLANK(400, "V001", ""),
+    EMAIL(400, "V002", ""),
+
+    ;
 
 
     private int status;
