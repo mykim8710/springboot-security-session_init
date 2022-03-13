@@ -1,7 +1,17 @@
 # spring-security 복습 : 간단한 SIGN IN web
-- Session기반 spring security Sign in test
+- Session 기반 spring security Sign in test
 - 권한 별 접근여부 확인
 - Thymeleaf Spring Security tag 연습
+
+```
+[Session방식 인증 기본원리]
+
+1) 클라이언트 id, pw -> 서버에 최초 sign in 요청
+2) id, pw가 맞는지 확인이 되면 Server의 Session이라는 메모리 영역에 해당 session Id, User Object를 저장
+3) 서버가 클라이언트(웹브라우저)에 session id를 리턴, 웹브라우저의 Cookie에 session id를 저장
+4) 그뒤 클라이언트가 서버에 새로운 요청이 발생되면 session id가 같이 가고 이 session id와 서버에 session id와 비교하여 인증
+```
+
 
 1) 개발환경
 - Intelli J
