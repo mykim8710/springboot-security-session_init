@@ -3,9 +3,11 @@ server:
 
 ---
 spring:
-  # DB DataSource ??
+  # DB DataSource 설정
   datasource:
   # MYSQL
-    url: jdbc:mysql://127.0.0.1:3306/springsecurityDemo
+    # url: jdbc:mysql://127.0.0.1:3306/springsecurityDemo
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    url: jdbc:log4jdbc:mysql://127.0.0.1:3306/springsecurityDemo
     username: root
     password: kmy5708!@#

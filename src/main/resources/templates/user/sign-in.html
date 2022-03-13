@@ -3,9 +3,79 @@
     <head>
         <title>SIGN-IN</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <script type="text/javascript" src="/js/jquery-3.6.0.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('#signInForm').on('submit', function (e) {
+                    e.preventDefault();
+
+                    let account = $('#user_account').val();
+                    let password = $('#user_password').val();
+
+                    if(account == '' || account.length == 0) {
+                        $('#errorMessage').text("input account");
+                        return;
+                    }
+
+                    if(password == '' || password.length == 0) {
+                        $('#errorMessage').text("input password");
+                        return;
+                    }
+
+                    $.ajax({
+                        url: "/sign-in",
+                        type: "POST",
+                        data: $('#signInForm input').serialize(),
+                    }).done(function(response) {
+                        console.log(response);
+
+                        if (response == 'OK') {
+                            location.href = '/home';
+                        }
+
+                        if (response.status == 400) {
+                            let errorCode = response.code;
+                            let errorMessage = response.message;
+
+                            $('#errorMessage').text(errorMessage);
+                        }
+
+                    }).fail(function(error) {
+                        console.log(error);
+                    });
+                });
+            });
+        </script>
+        <style>
+            .errorMessage{
+                color: red;
+                font-weight: bold;
+            }
+        </style>
     </head>
     <body>
-        <div class="container">
+    <div class="container">
+        <h2>SIGN IN USER</h2>
+
+        <div id="inputArea">
+            <form id="signInForm" method="post">
+                <label>ACCOUNT</label>
+                <input type="text" id="user_account" name="account">
+                <br>
+                <label>PASSWORD</label>
+                <input type="password" id="user_password" name="password">
+                <br>
+                <input type="submit" value="SIGN IN">
+            </form>
         </div>
+
+        <div>
+            <p id="errorMessage" class="errorMessage"></p>
+        </div>
+
+        <div>
+            <a href="/user/sign-up">SIGN UP</a>
+        </div>
+    </div>
     </body>
 </html>

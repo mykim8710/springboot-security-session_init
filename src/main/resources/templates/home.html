@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <title>Title</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <script type="text/javascript" src="/js/jquery-3.6.0.min.js"></script>
+    </head>
+    <body>
+        <h2>HOME : Sign-in Success!!</h2>
+        <a href="/sign-out">SIGN OUT</a>
+        <hr>
+
+        <!--thymeleaf Test-->
+        <h3>SIGN IN USER INFO</h3>
+        <p th:text="${#authentication.name}"></p>
+        <p th:text="${#authentication.authorities}"></p>
+        <p th:text="${#authentication.authenticated}"></p>
+
+        <h3 sec:authorize="hasAuthority('MASTER')">Has MASTER Role</h3> <!--ROLE_접두사 X-->
+        <h3 sec:authorize="hasAuthority('MEMBER')">Has MEMBER Role</h3> <!--ROLE_접두사 X-->
+        <!--<h3 sec:authorize="hasRole('ROLE_MASTER')">Has ROLE_MASTER Role</h3>--> <!--ROLE_접두사 O-->
+        <!--<h3 sec:authorize="hasRole('ROLE_MEMBER')">Has ROLE_MEMBER Role</h3>--> <!--ROLE_접두사 O-->
+        <hr>
+
+        <!--Access byRole -->
+        <a href="/user/master">MASTER ONLY PAGE</a><br>
+        <a href="/user/member">USER(including MASTER) PAGE</a>
+    </body>
+</html>

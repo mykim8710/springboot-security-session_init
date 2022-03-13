@@ -13,9 +13,14 @@
     </insert>
 
     <select id="findUserByAccount" parameterType="String" resultType="User">
-        SELECT *
-          FROM USER
-         WHERE account = #{account}
+        SELECT USER.id          AS id,
+               USER.account     AS account,
+               USER.password    AS password,
+               USER.role        AS role,
+               role.description AS roleDescription
+          FROM USER AS USER
+     LEFT JOIN ROLE AS ROLE ON USER.role = ROLE.role
+         WHERE USER.account = #{account}
     </select>
 
     <select id="findUserById" parameterType="Long" resultType="User">

@@ -6,6 +6,7 @@ import com.example.springsecurity.user.mapper.UserMapper;
 import com.example.springsecurity.user.model.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,15 +15,20 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UserService {
     private final UserMapper userMapper;
+    private final PasswordEncoder passwordEncoder;
 
     // sign-up
     @Transactional
-    public Long signUpUser(RequestUserSignUpDto requestUserSignUpDto) {
+    public Long signUpUser(RequestUserSignUpDto dto) {
         // Check Duplicate Accoount
-        checkDuplicateAccount(requestUserSignUpDto);
+        checkDuplicateAccount(dto);
 
         // set insert domain model
-        User insertUserModel = User.toSignUpModel(requestUserSignUpDto);
+        User insertUserModel = User.builder()
+                                    .account(dto.getAccount())
+                                    .password(passwordEncoder.encode(dto.getPassword()))
+                                    .role(dto.getRole())
+                                    .build();
 
         // insert User
         userMapper.insertUser(insertUserModel);
